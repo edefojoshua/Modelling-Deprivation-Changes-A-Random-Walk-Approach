@@ -1,2 +1,2 @@
 # Modelling-Deprivation-Changes-A-Random-Walk-Approach
-Using R
+This R code simulates a random walk to model fluctuations in the Quantile Index of Multiple Deprivation (QIMD) over 20 years. It initializes the quantile at 0.52 and updates it yearly using a small random change from a normal distribution (mean = 0, SD = 0.02). A bounding condition ensures values remain between 0 and 1. The results are displayed and plotted, with a blue line showing the trend and red dots marking yearly values. Af 10 years, the quantile value is 0.5438, and after 20 years, it is 0.5766, reflecting natural fluctuations in deprivation levels while preventing extreme variations.
