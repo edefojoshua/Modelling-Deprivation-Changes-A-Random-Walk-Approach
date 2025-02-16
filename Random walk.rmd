@@ -1,0 +1,53 @@
+---
+title: 'Modelling Deprivation Changes: A Random Walk Approach'
+author: "Joshua Edefo"
+email: "edefojoshu2000@yahoo.com"
+date: "2025-02-16"
+output: github_document
+---
+This R code simulates a random walk to model fluctuations in the Quantile Index of Multiple Deprivation (QIMD) over 20 years. It initializes the quantile at 0.52 and updates it yearly using a small random change from a normal distribution (mean = 0, SD = 0.02). A bounding condition ensures values remain between 0 and 1. The results are displayed and plotted, with a blue line showing the trend and red dots marking yearly values. Af 10 years, the quantile value is 0.5438, and after 20 years, it is 0.5766, reflecting natural fluctuations in deprivation levels while preventing extreme variations.
+
+Libraries
+```{r b, message=FALSE}
+library(usethis)
+library(dplyr)
+```
+
+Random walk for modelling QIMD changes
+
+```{r c}
+set.seed(123)  # For reproducibility
+
+# Parameters
+years <- 20                    # Number of years
+quantile_start <- 0.52         # Initial quantile
+sd <- 0.02                  # Standard deviation of yearly fluctuation
+
+
+# Simulate random walk
+quantiles <- numeric(years + 1)  # A numeric vector to store the quantile values for each year. It has years + 1 elements to include the initial value.
+quantiles[1] <- quantile_start  # Sets the first element of the vector to the initial quantile value.
+
+for (t in 2:(years + 1)) {        # A loop that runs from the second year to the last year.
+  quantiles[t] <- quantiles[t - 1] + rnorm(1, mean = 0, sd = sd)  # Random step i.e., adds a random step to the previous year's quantile.
+  quantiles[t] <- max(0, min(1, quantiles[t]))  # Ensures that the quantile values stay within the range [0, 1]
+}
+
+quantiles
+
+
+# Plot the random walk
+plot(0:years, quantiles, type = "l", col = "blue", lwd = 2, 
+     xlab = "Year", ylab = "Quantile", main = "Random Walk of Exposure Quantile")
+points(0:years, quantiles, pch = 16, col = "red")  # Add points
+
+
+```
+summary of the model output
+The QIMD quantile starts at 0.52, fluctuates over 20 years, peaks at 0.6114, and ends at 0.5766.
+
+Session information
+```{r d}
+sessionInfo()
+```
+
